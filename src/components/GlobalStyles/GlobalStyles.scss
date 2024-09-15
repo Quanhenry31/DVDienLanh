@@ -1,0 +1,113 @@
+@import 'normalize.css';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+    --primary: #e1b22d;
+    --black: #000;
+    --text-color: #000;
+    --white: #fff;
+    --color-text: rgb(106, 106, 106);
+    --color-green: #3b5d50;
+    --font-family: 'Trocchi', sans-serif;
+    --bs-body-bg: #eff2f1;
+
+    //defaulayout
+    --default-layout-header-height: 60px;
+    --default-layout-with: 1150px;
+    --default-layout-horizontal-spacer: 24px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    --bs-table-bg: var(--bs-body-bg);
+}
+
+html {
+    font-size: 62.5%;
+    font-family: var(--font-family);
+}
+
+body {
+    font-family: var(--font-family);
+    font-weight: 500;
+    font-style: normal;
+    font-size: 1.6rem;
+    line-height: 1.5;
+    text-rendering: optimizeSpeed;
+    overflow-y: overlay;
+}
+/// ma giam gia input
+input#coupon {
+    background: #fff;
+}
+.navbar-collapse {
+    flex-basis: 100%;
+    flex-grow: 0;
+    align-items: center;
+}
+
+//Scollbar css
+html ::-webkit-scrollbar {
+    border-radius: 0px;
+    width: 8px;
+}
+html *::-webkit-scrollbar {
+    border-radius: 0;
+    width: 8px;
+}
+
+html ::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background-color: rgba(22, 24, 35, 0.06);
+}
+html *::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background-color: rgba(22, 24, 35, 0.06);
+}
+
+html ::-webkit-scrollbar-track {
+    border-radius: 0px;
+    background-color: rgba(0, 0, 0, 0);
+}
+html *::-webkit-scrollbar-track {
+    border-radius: 0;
+    background-color: rgba(0, 0, 0, 0);
+}
+
+button,
+input,
+[tabindex] {
+    outline: none;
+    border: none;
+}
+
+a {
+    color: var(--text-color);
+    text-decoration: none;
+}
+ul {
+    list-style: none;
+}
+.slick-prev:before {
+    content: 's';
+}
+// Fonts embeded
+@font-face {
+    font-family: Brands;
+    src: url('/assets/fonts/fa-brands-400.woff2');
+    font-weight: 400;
+}
+@font-face {
+    font-family: Brands;
+    src: url('/assets/fonts/fa-solid-900.woff2');
+    font-weight: 600;
+}
+@font-face {
+    font-family: Brands;
+    src: url('/assets/fonts/UcC73FwrK3iLTeHuS_fvQtMwCp50KnMa1ZL7.woff2');
+    font-weight: 700;
+}

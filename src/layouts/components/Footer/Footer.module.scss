@@ -1,0 +1,159 @@
+// footer {
+//     background-color: #eff2f1;
+// }
+// .footer-main {
+//     display: flex;
+//     justify-content: center;
+//     height: 750px;
+//     width: 100%;
+//     margin-top: 200px;
+//     .footer-contact {
+//         width: 90%;
+//         height: 100%;
+//         .footer-contact-bot {
+//             display: flex;
+//             width: 100%;
+//             height: 300px;
+//             .bot-right {
+//                 width: 50%;
+//                 height: 100%;
+//                 .bot-right-flex {
+//                     display: flex;
+//                     align-items: center;
+//                     .icon-mail {
+//                         margin: 6px 12px;
+//                         padding: 6px 12px;
+//                         font-size: 28px;
+//                     }
+//                     h5 {
+//                         margin: 6px 12px;
+//                         padding: 6px 12px;
+//                         font-size: 18px;
+//                     }
+//                 }
+
+//                 input {
+//                     height: 50px;
+//                     width: 250px;
+//                     margin: 6px 12px;
+//                     padding: 6px 12px;
+//                     border-radius: 10px;
+//                     border: 1px solid #3b5d50;
+//                 }
+//             }
+//             .bot-left {
+//                 position: relative;
+//                 width: 50%;
+//                 height: 100%;
+//                 .bot-left-img {
+//                     position: absolute;
+//                     top: -30%;
+//                     right: 0;
+//                     width: 380px;
+//                     height: 330px;
+//                     img {
+//                         width: 100%;
+//                         height: 100%;
+//                     }
+//                 }
+//             }
+//         }
+//     }
+
+//     ///// footer contact center
+
+//     .footer-contact-cent {
+//         display: flex;
+//         height: 320px;
+//         width: 100%;
+//         .footer-contact-cent-right {
+//             width: 30%;
+//             height: 100%;
+//             .footer-logo {
+//                 width: 30%;
+//                 height: 50px;
+//                 .logo {
+//                     margin: 6px 12px;
+//                     padding: 6px 12px;
+//                     color: var(--color-green);
+//                     font-size: 32px;
+//                     font-weight: 700;
+//                     span {
+//                         color: var(--color-green);
+//                     }
+//                 }
+//             }
+//             .footer-title {
+//                 display: contents;
+//                 width: 100%;
+//                 height: 20px;
+//                 h3 {
+//                     width: 100%;
+//                     color: var(--color-text);
+//                     font-size: 18px;
+//                     margin: 6px 12px;
+//                     padding: 6px 12px;
+//                 }
+//             }
+//             .footer-social {
+//                 display: flex;
+//                 width: 100%;
+//                 height: 20px;
+//                 padding: 26px 0 0 10px;
+//                 .footer-social-icon {
+//                     transition: 0.3s ease all;
+//                     width: 40px;
+//                     height: 40px;
+//                     margin: 0 0 0 10px;
+//                     align-items: center;
+//                     justify-content: center;
+//                     display: flex;
+//                     border-radius: 50%;
+//                     background: #dce5e4;
+//                     .icon-social {
+//                         font-size: 18px;
+//                         color: var(--color-green);
+//                     }
+//                     &:hover {
+//                         background-color: var(--color-green);
+//                         cursor: pointer;
+//                         .icon-social {
+//                             color: var(--while);
+//                         }
+//                     }
+//                 }
+//             }
+//         }
+//         .footer-contact-cent-left {
+//             width: 70%;
+//             height: 100%;
+//             display: flex;
+//             justify-content: space-around;
+//             align-items: center;
+//             font-size: 14px;
+//             color: var(--color-text);
+
+//             ul li {
+//                 padding: 10px 0;
+//             }
+//         }
+//     }
+
+//     /// footer contact downt
+//     .footer-contact-dow {
+//         .copyright {
+//             h3 {
+//                 font-size: 18px;
+//                 margin: 6px 12px;
+//                 padding: 6px 12px;
+//             }
+//         }
+//         .policy {
+//             display: flex;
+//             float: right;
+//             ul {
+//                 margin: 0 20px 0 30px;
+//             }
+//         }
+//     }
+// }
