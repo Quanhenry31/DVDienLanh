@@ -6,7 +6,7 @@ export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
     const [auth, setAuth] = useState(false);
-    const [user, setUser] = useState('');
+    const [userInformation, setUser] = useState('');
 
     useEffect(() => {
         axios.defaults.withCredentials = true;
@@ -17,7 +17,8 @@ export const AuthProvider = ({ children }) => {
                     setAuth(false);
                 } else {
                     setAuth(true);
-                    setUser(res.data.data);
+                    setUser(res.data);
+                    console.log(res.data);
                 }
             })
             .catch((err) => {
@@ -25,5 +26,5 @@ export const AuthProvider = ({ children }) => {
             });
     }, []);
 
-    return <AuthContext.Provider value={{ auth, user }}>{children}</AuthContext.Provider>;
+    return <AuthContext.Provider value={{ auth, userInformation }}>{children}</AuthContext.Provider>;
 };

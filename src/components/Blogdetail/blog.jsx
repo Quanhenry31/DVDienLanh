@@ -4,12 +4,15 @@ import { Link, useParams } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import { useSelector } from 'react-redux';
 function Blog() {
     const { id } = useParams();
     const [blogs, setBlogs] = useState(null);
     const [blogsID, setBlogsID] = useState(null);
     const [listComment, setlistComment] = useState(null);
     const [comment, setComment] = useState('');
+    const user = useSelector((state) => state.user.user);
+    console.log(user);
 
     const fetchProductData = async () => {
         axios
@@ -17,7 +20,6 @@ function Blog() {
             .then((response) => {
                 setBlogsID(response.data.data);
                 setlistComment(response.data.data.commentBlogs);
-                console.log(response.data.data.commentBlogs);
             })
             .catch((error) => {
                 console.error('There was an error fetching the product data!', error);
@@ -34,26 +36,30 @@ function Blog() {
     }, []);
 
     const handleSubmit = async (e) => {
-        e.preventDefault(); // Ngăn chặn hành vi mặc định của form
+        e.preventDefault();
+
         const commentData = {
             name1: 'Sample Name 1',
             name2: comment,
             number1: 1,
             number2: 2,
             blogID: id,
-            userID: 2,
+            userID: user?.id,
             createdAt: new Date().toISOString(),
             updatedAt: new Date().toISOString(),
         };
-
-        try {
-            const response = await axios.post('http://localhost:9000/api/commentBlogs', commentData);
-            console.log('Response:', response.data);
-            setComment('');
-            fetchProductData();
-            toast.success(`Comment thành công !`);
-        } catch (error) {
-            console.error('Error posting comment:', error);
+        if (user.id) {
+            try {
+                const response = await axios.post('http://localhost:9000/api/commentBlogs', commentData);
+                console.log('Response:', response.data);
+                setComment('');
+                fetchProductData();
+                toast.success(`Comment thành công !`);
+            } catch (error) {
+                console.error('Error posting comment:', error);
+            }
+        } else {
+            window.location.href = 'http://localhost:3000/login';
         }
     };
 
@@ -101,11 +107,7 @@ function Blog() {
                                     <div className="single-comment justify-content-between d-flex">
                                         <div className="user justify-content-between d-flex">
                                             <div className="thumb">
-                                                <img
-                                                    className="!w-[60px] !h-[60px]"
-                                                    src="https://themewagon.github.io/eiser/img/blog/c1.png"
-                                                    alt=""
-                                                />
+                                                <img className="!w-[60px] !h-[60px]" src={comment.User?.image} alt="" />
                                             </div>
                                             <div className="desc">
                                                 <div className="d-flex justify-content-between">

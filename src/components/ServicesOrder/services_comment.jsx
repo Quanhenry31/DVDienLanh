@@ -5,7 +5,8 @@ import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
-function ProductComment() {
+
+function ServicesComment() {
     const { id } = useParams();
     const [product, setProduct] = useState(null);
     const [productDetail, setProductDetail] = useState(null);
@@ -17,8 +18,10 @@ function ProductComment() {
     const [replyContent, setReplyContent] = useState(''); // State để lưu trữ nội dung trả lời
     const [ratingCountALL, setRatingCountALL] = useState({});
     const user = useSelector((state) => state.user.user);
+    const conten = useSelector((state) => state.conten);
 
     const fetchProductData = async () => {
+        const id = 2;
         axios
             .get(`http://localhost:9000/api/products/${id}`)
             .then((response) => {
@@ -144,7 +147,7 @@ function ProductComment() {
             label: 'Mô tả',
             content: (
                 <div>
-                    <p>{product?.title}</p>
+                    <p>{conten?.conten}</p>
                 </div>
             ),
         },
@@ -750,4 +753,4 @@ function ProductComment() {
     );
 }
 
-export default ProductComment;
+export default ServicesComment;

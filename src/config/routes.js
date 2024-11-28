@@ -11,6 +11,8 @@ const routes = {
     register: '/register',
     order: '/order',
     user: '/user',
+    servicesOrder: '/servicesOrder',
+    ServicesUsually: '/ServicesUsually',
     callback: '/callback',
     callbackPaypal: '/callbackPaypal',
     callbackMomo: '/callbackMomo',

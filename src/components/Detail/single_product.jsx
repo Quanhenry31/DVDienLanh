@@ -17,8 +17,7 @@ function SingleProduct() {
     const [searchParams, setSearchParams] = useSearchParams();
     const [listOfSoluong, setListOfSoluong] = useState([]);
     const [listOfSoluongCheck, setListOfSoluongCheck] = useState([]);
-
-    console.log(listOfSoluongCheck);
+    const [thongSo, setThongSo] = useState(null);
 
     useEffect(() => {
         setSearchParams((params) => {
@@ -88,8 +87,17 @@ function SingleProduct() {
 
         fetchData();
     }, [location.search]);
-
     const handleSearchChange = (e) => {
+        const eTargetImg = e.target.value;
+        setSelectedImage(null);
+        setThongSo(null);
+        setSelectedImage(product?.ImgDetails?.find((item) => item.name === eTargetImg)?.image);
+        setThongSo(product?.Sizes?.find((item) => item.size === eTargetImg));
+
+        product?.ImgDetails?.find((item) => {
+            return item.name === e.target.value;
+        });
+
         setSize(e.target.value);
         setSearchParams((params) => {
             if (e) {
@@ -163,7 +171,7 @@ function SingleProduct() {
                                 </li>
                                 <li>
                                     <a href="#">
-                                        <span>Trạng thái</span> : {product.status}
+                                        <span>Trạng thái</span> : {listOfSoluong[0]?.status || 'Vui lòng chọn size'}
                                     </a>
                                 </li>
                                 <li>

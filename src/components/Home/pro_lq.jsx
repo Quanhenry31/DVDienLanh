@@ -45,7 +45,7 @@ function Product() {
                     </div>
                 </div>
                 <div className="row">
-                    {listOfPosts.map((value, key) => (
+                    {listOfPosts?.map((value, key) => (
                         <div className="col-lg-3 col-md-6" key={key}>
                             <div className="single-product">
                                 <div className="product-img">
@@ -77,10 +77,10 @@ function Product() {
                                     </a>
                                     <div className="mt-3 flex items-center justify-between">
                                         <div>
-                                            <span className="mr-4">${value.price}</span>
+                                            <span className="mr-4">{value.price} vnđ</span>
                                         </div>
                                         <select
-                                            className="!text-[20px] rounded border appearance-none border-gray-400 py-3 focus:outline-none focus:border-red-500 text-base pl-3 pr-10 ml-auto"
+                                            className="!text-[18px] rounded border appearance-none border-gray-400 py-3 focus:outline-none focus:border-red-500 text-base pl-3 pr-10 ml-auto"
                                             onChange={(e) => handleSizeChange(value.id, e.target.value)}
                                             value={size[value.id] || ''}
                                         >

@@ -16,6 +16,7 @@ function CartProduct() {
     const [activeTab2, setActiveTab2] = useState('Paypal');
     const [phivanchuyen, setphivanchuyen] = useState(0);
     const [partPhivanchuyen, setpartPhivanchuyen] = useState(0);
+    const user = useSelector((state) => state.user.user);
 
     if (activeTab == 'Description') {
         localStorage.setItem('ok', activeTab2);
@@ -24,7 +25,7 @@ function CartProduct() {
     }
     const LoaiThanhToan = localStorage.getItem('ok');
 
-    const cart = useSelector((state) => state.cart);
+    const cart = useSelector((state) => state.cart.cart);
     const dispatch = useDispatch();
 
     const getTotal = () => {
@@ -97,241 +98,245 @@ function CartProduct() {
             toast.error('Vui lòng chọn phương thức thanh toán');
             return;
         }
-        if (LoaiThanhToan == 'Paypal') {
-            if (cart.length > 0) {
-                const orderDetailData = cart.map((item) => ({
-                    productID: item.id,
-                    quantity: item.quantity || 1,
-                    unitPrice: item.price,
-                    allMoney: item.price * (item.quantity || 1),
-                    size: item.size,
-                }));
+        if (user.id) {
+            if (LoaiThanhToan == 'Paypal') {
+                if (cart.length > 0) {
+                    const orderDetailData = cart.map((item) => ({
+                        productID: item.id,
+                        quantity: item.quantity || 1,
+                        unitPrice: item.price,
+                        allMoney: item.price * (item.quantity || 1),
+                        size: item.size,
+                    }));
 
-                const formatDate = (date) => {
-                    const year = date.getFullYear();
-                    const month = String(date.getMonth() + 1).padStart(2, '0');
-                    const day = String(date.getDate()).padStart(2, '0');
-                    const hours = String(date.getHours()).padStart(2, '0');
-                    const minutes = String(date.getMinutes()).padStart(2, '0');
-                    const seconds = String(date.getSeconds()).padStart(2, '0');
-                    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
-                };
+                    const formatDate = (date) => {
+                        const year = date.getFullYear();
+                        const month = String(date.getMonth() + 1).padStart(2, '0');
+                        const day = String(date.getDate()).padStart(2, '0');
+                        const hours = String(date.getHours()).padStart(2, '0');
+                        const minutes = String(date.getMinutes()).padStart(2, '0');
+                        const seconds = String(date.getSeconds()).padStart(2, '0');
+                        return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+                    };
 
-                const requestData = {
-                    orderData: {
-                        user_id: 2,
-                        order_date: formatDate(now),
-                        delivery_date: formatDate(twoDaysLater),
-                        delivery_time: formatDate(twoDaysLater), // Sử dụng định dạng thời gian phù hợp nếu cần
-                        total_price: partTongThanhToan,
-                        status: 'Pending',
-                        shiptype: partPhivanchuyen,
-                        voucher: tonggiamggia,
-                    },
-                    orderDetailData: orderDetailData, // Always send as an array
-                    paymentData: {
-                        name: 'Paypal',
-                        paymentDate: formatDate(now),
-                        amount: usdAmount,
-                        paymentMethod: LoaiThanhToan,
-                        status: 'completed',
-                        nameUser: userData.name,
-                        phone: userData.phone,
-                        addresses: userData.address,
-                        email: userData.email,
-                    },
-                };
+                    const requestData = {
+                        orderData: {
+                            user_id: user.id,
+                            order_date: formatDate(now),
+                            delivery_date: formatDate(twoDaysLater),
+                            delivery_time: formatDate(twoDaysLater), // Sử dụng định dạng thời gian phù hợp nếu cần
+                            total_price: partTongThanhToan,
+                            status: 'Pending',
+                            shiptype: partPhivanchuyen,
+                            voucher: tonggiamggia,
+                        },
+                        orderDetailData: orderDetailData, // Always send as an array
+                        paymentData: {
+                            name: 'Paypal',
+                            paymentDate: formatDate(now),
+                            amount: usdAmount,
+                            paymentMethod: LoaiThanhToan,
+                            status: 'thanh toán thất bại',
+                            nameUser: userData.name,
+                            phone: userData.phone,
+                            addresses: userData.address,
+                            email: userData.email,
+                        },
+                    };
 
-                axios
-                    .post('http://localhost:9000/api/orders/bill/paypal', requestData)
-                    .then((response) => {
-                        console.log('API Response:', response.data);
-                        toast.success('Vui lòng thanh toán!');
-                        window.location.href = response.data.redirectUrl;
-                    })
-                    .catch((error) => {
-                        console.error('API Error:', error);
-                    });
-            } else {
-                toast.error('Giỏ hàng không có sản phẩm nào!');
+                    axios
+                        .post('http://localhost:9000/api/orders/bill/paypal', requestData)
+                        .then((response) => {
+                            console.log('API Response:', response.data);
+                            toast.success('Vui lòng thanh toán!');
+                            window.location.href = response.data.redirectUrl;
+                        })
+                        .catch((error) => {
+                            console.error('API Error:', error);
+                        });
+                } else {
+                    toast.error('Giỏ hàng không có sản phẩm nào!');
+                }
             }
-        }
-        if (LoaiThanhToan == 'Vnpay') {
-            if (cart.length > 0) {
-                const orderDetailData = cart.map((item) => ({
-                    productID: item.id,
-                    quantity: item.quantity || 1,
-                    unitPrice: item.price,
-                    allMoney: item.price * (item.quantity || 1),
-                    size: item.size,
-                }));
+            if (LoaiThanhToan == 'Vnpay') {
+                if (cart.length > 0) {
+                    const orderDetailData = cart.map((item) => ({
+                        productID: item.id,
+                        quantity: item.quantity || 1,
+                        unitPrice: item.price,
+                        allMoney: item.price * (item.quantity || 1),
+                        size: item.size,
+                    }));
 
-                const formatDate = (date) => {
-                    const year = date.getFullYear();
-                    const month = String(date.getMonth() + 1).padStart(2, '0');
-                    const day = String(date.getDate()).padStart(2, '0');
-                    const hours = String(date.getHours()).padStart(2, '0');
-                    const minutes = String(date.getMinutes()).padStart(2, '0');
-                    const seconds = String(date.getSeconds()).padStart(2, '0');
-                    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
-                };
+                    const formatDate = (date) => {
+                        const year = date.getFullYear();
+                        const month = String(date.getMonth() + 1).padStart(2, '0');
+                        const day = String(date.getDate()).padStart(2, '0');
+                        const hours = String(date.getHours()).padStart(2, '0');
+                        const minutes = String(date.getMinutes()).padStart(2, '0');
+                        const seconds = String(date.getSeconds()).padStart(2, '0');
+                        return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+                    };
 
-                const requestData = {
-                    orderData: {
-                        user_id: 2,
-                        order_date: formatDate(now),
-                        delivery_date: formatDate(twoDaysLater),
-                        delivery_time: formatDate(twoDaysLater), // Sử dụng định dạng thời gian phù hợp nếu cần
-                        total_price: partTongThanhToan,
-                        status: 'Pending',
-                        shiptype: partPhivanchuyen,
-                        voucher: tonggiamggia,
-                    },
-                    orderDetailData: orderDetailData, // Always send as an array
-                    paymentData: {
-                        name: 'MB',
-                        paymentDate: formatDate(now),
-                        amount: partTongThanhToan,
-                        paymentMethod: LoaiThanhToan,
-                        status: 'completed',
-                        nameUser: userData.name,
-                        phone: userData.phone,
-                        addresses: userData.address,
-                        email: userData.email,
-                    },
-                };
+                    const requestData = {
+                        orderData: {
+                            user_id: user.id,
+                            order_date: formatDate(now),
+                            delivery_date: formatDate(twoDaysLater),
+                            delivery_time: formatDate(twoDaysLater), // Sử dụng định dạng thời gian phù hợp nếu cần
+                            total_price: partTongThanhToan,
+                            status: 'Pending',
+                            shiptype: partPhivanchuyen,
+                            voucher: tonggiamggia,
+                        },
+                        orderDetailData: orderDetailData, // Always send as an array
+                        paymentData: {
+                            name: 'MB',
+                            paymentDate: formatDate(now),
+                            amount: partTongThanhToan,
+                            paymentMethod: LoaiThanhToan,
+                            status: 'thanh toán thất bại',
+                            nameUser: userData.name,
+                            phone: userData.phone,
+                            addresses: userData.address,
+                            email: userData.email,
+                        },
+                    };
 
-                axios
-                    .post('http://localhost:9000/api/orders/bill/vnpay', requestData)
-                    .then((response) => {
-                        console.log('API Response:', response.data);
-                        toast.success('Vui lòng thanh toán!');
-                        // localStorage.setItem('VNpayIdOrder', response.data.message);
-                        window.location.href = response.data.paymentUrl;
-                    })
-                    .catch((error) => {
-                        console.error('API Error:', error);
-                    });
-            } else {
-                toast.error('Giỏ hàng không có sản phẩm nào!');
+                    axios
+                        .post('http://localhost:9000/api/orders/bill/vnpay', requestData)
+                        .then((response) => {
+                            console.log('API Response:', response.data);
+                            toast.success('Vui lòng thanh toán!');
+                            // localStorage.setItem('VNpayIdOrder', response.data.message);
+                            window.location.href = response.data.paymentUrl;
+                        })
+                        .catch((error) => {
+                            console.error('API Error:', error);
+                        });
+                } else {
+                    toast.error('Giỏ hàng không có sản phẩm nào!');
+                }
             }
-        }
-        if (LoaiThanhToan == 'Momo') {
-            if (cart.length > 0) {
-                const orderDetailData = cart.map((item) => ({
-                    productID: item.id,
-                    quantity: item.quantity || 1,
-                    unitPrice: item.price,
-                    allMoney: item.price * (item.quantity || 1),
-                    size: item.size,
-                }));
+            if (LoaiThanhToan == 'Momo') {
+                if (cart.length > 0) {
+                    const orderDetailData = cart.map((item) => ({
+                        productID: item.id,
+                        quantity: item.quantity || 1,
+                        unitPrice: item.price,
+                        allMoney: item.price * (item.quantity || 1),
+                        size: item.size,
+                    }));
 
-                const formatDate = (date) => {
-                    const year = date.getFullYear();
-                    const month = String(date.getMonth() + 1).padStart(2, '0');
-                    const day = String(date.getDate()).padStart(2, '0');
-                    const hours = String(date.getHours()).padStart(2, '0');
-                    const minutes = String(date.getMinutes()).padStart(2, '0');
-                    const seconds = String(date.getSeconds()).padStart(2, '0');
-                    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
-                };
+                    const formatDate = (date) => {
+                        const year = date.getFullYear();
+                        const month = String(date.getMonth() + 1).padStart(2, '0');
+                        const day = String(date.getDate()).padStart(2, '0');
+                        const hours = String(date.getHours()).padStart(2, '0');
+                        const minutes = String(date.getMinutes()).padStart(2, '0');
+                        const seconds = String(date.getSeconds()).padStart(2, '0');
+                        return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+                    };
 
-                const requestData = {
-                    orderData: {
-                        user_id: 2,
-                        order_date: formatDate(now),
-                        delivery_date: formatDate(twoDaysLater),
-                        delivery_time: formatDate(twoDaysLater), // Sử dụng định dạng thời gian phù hợp nếu cần
-                        total_price: partTongThanhToan,
-                        status: 'Pending',
-                        shiptype: partPhivanchuyen,
-                        voucher: tonggiamggia,
-                    },
-                    orderDetailData: orderDetailData, // Always send as an array
-                    paymentData: {
-                        name: 'Momo',
-                        paymentDate: formatDate(now),
-                        amount: partTongThanhToan,
-                        paymentMethod: LoaiThanhToan,
-                        status: 'completed',
-                        nameUser: userData.name,
-                        phone: userData.phone,
-                        addresses: userData.address,
-                        email: userData.email,
-                    },
-                };
+                    const requestData = {
+                        orderData: {
+                            user_id: user.id,
+                            order_date: formatDate(now),
+                            delivery_date: formatDate(twoDaysLater),
+                            delivery_time: formatDate(twoDaysLater), // Sử dụng định dạng thời gian phù hợp nếu cần
+                            total_price: partTongThanhToan,
+                            status: 'Pending',
+                            shiptype: partPhivanchuyen,
+                            voucher: tonggiamggia,
+                        },
+                        orderDetailData: orderDetailData, // Always send as an array
+                        paymentData: {
+                            name: 'Momo',
+                            paymentDate: formatDate(now),
+                            amount: partTongThanhToan,
+                            paymentMethod: LoaiThanhToan,
+                            status: 'thanh toán thất bại',
+                            nameUser: userData.name,
+                            phone: userData.phone,
+                            addresses: userData.address,
+                            email: userData.email,
+                        },
+                    };
 
-                axios
-                    .post('http://localhost:9000/api/orders/bill/momo', requestData)
-                    .then((response) => {
-                        console.log('API Response:', response.data);
-                        toast.success('Vui lòng thanh toán!');
-                        window.location.href = response.data.paymentUrl;
-                    })
-                    .catch((error) => {
-                        console.error('API Error:', error);
-                    });
-            } else {
-                toast.error('Giỏ hàng không có sản phẩm nào!');
+                    axios
+                        .post('http://localhost:9000/api/orders/bill/momo', requestData)
+                        .then((response) => {
+                            console.log('API Response:', response.data);
+                            toast.success('Vui lòng thanh toán!');
+                            window.location.href = response.data.paymentUrl;
+                        })
+                        .catch((error) => {
+                            console.error('API Error:', error);
+                        });
+                } else {
+                    toast.error('Giỏ hàng không có sản phẩm nào!');
+                }
             }
-        }
-        if (LoaiThanhToan == 'cashPay') {
-            if (cart.length > 0) {
-                const orderDetailData = cart.map((item) => ({
-                    productID: item.id,
-                    quantity: item.quantity || 1,
-                    unitPrice: item.price,
-                    allMoney: item.price * (item.quantity || 1),
-                    size: item.size,
-                }));
+            if (LoaiThanhToan == 'cashPay') {
+                if (cart.length > 0) {
+                    const orderDetailData = cart.map((item) => ({
+                        productID: item.id,
+                        quantity: item.quantity || 1,
+                        unitPrice: item.price,
+                        allMoney: item.price * (item.quantity || 1),
+                        size: item.size,
+                    }));
 
-                const formatDate = (date) => {
-                    const year = date.getFullYear();
-                    const month = String(date.getMonth() + 1).padStart(2, '0');
-                    const day = String(date.getDate()).padStart(2, '0');
-                    const hours = String(date.getHours()).padStart(2, '0');
-                    const minutes = String(date.getMinutes()).padStart(2, '0');
-                    const seconds = String(date.getSeconds()).padStart(2, '0');
-                    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
-                };
+                    const formatDate = (date) => {
+                        const year = date.getFullYear();
+                        const month = String(date.getMonth() + 1).padStart(2, '0');
+                        const day = String(date.getDate()).padStart(2, '0');
+                        const hours = String(date.getHours()).padStart(2, '0');
+                        const minutes = String(date.getMinutes()).padStart(2, '0');
+                        const seconds = String(date.getSeconds()).padStart(2, '0');
+                        return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+                    };
 
-                const requestData = {
-                    orderData: {
-                        user_id: 2,
-                        order_date: formatDate(now),
-                        delivery_date: formatDate(twoDaysLater),
-                        delivery_time: formatDate(twoDaysLater), // Sử dụng định dạng thời gian phù hợp nếu cần
-                        total_price: partTongThanhToan,
-                        status: 'Pending',
-                        shiptype: partPhivanchuyen,
-                        voucher: tonggiamggia,
-                    },
-                    orderDetailData: orderDetailData, // Always send as an array
-                    paymentData: {
-                        name: 'MB',
-                        paymentDate: formatDate(now),
-                        amount: partTongThanhToan,
-                        paymentMethod: LoaiThanhToan,
-                        status: 'completed',
-                        nameUser: userData.name,
-                        phone: userData.phone,
-                        addresses: userData.address,
-                        email: userData.email,
-                    },
-                };
+                    const requestData = {
+                        orderData: {
+                            user_id: user.id,
+                            order_date: formatDate(now),
+                            delivery_date: formatDate(twoDaysLater),
+                            delivery_time: formatDate(twoDaysLater), // Sử dụng định dạng thời gian phù hợp nếu cần
+                            total_price: partTongThanhToan,
+                            status: 'Pending',
+                            shiptype: partPhivanchuyen,
+                            voucher: tonggiamggia,
+                        },
+                        orderDetailData: orderDetailData, // Always send as an array
+                        paymentData: {
+                            name: 'MB',
+                            paymentDate: formatDate(now),
+                            amount: partTongThanhToan,
+                            paymentMethod: LoaiThanhToan,
+                            status: 'completed',
+                            nameUser: userData.name,
+                            phone: userData.phone,
+                            addresses: userData.address,
+                            email: userData.email,
+                        },
+                    };
 
-                axios
-                    .post('http://localhost:9000/api/orders/bill', requestData)
-                    .then((response) => {
-                        console.log('API Response:', response.data);
-                        toast.success('Thanh toán thành công!');
-                    })
-                    .catch((error) => {
-                        console.error('API Error:', error);
-                    });
-            } else {
-                toast.error('Giỏ hàng không có sản phẩm nào!');
+                    axios
+                        .post('http://localhost:9000/api/orders/bill', requestData)
+                        .then((response) => {
+                            console.log('API Response:', response.data);
+                            toast.success('Thanh toán thành công!');
+                        })
+                        .catch((error) => {
+                            console.error('API Error:', error);
+                        });
+                } else {
+                    toast.error('Giỏ hàng không có sản phẩm nào!');
+                }
             }
+        } else {
+            window.location.href = 'http://localhost:3000/login';
         }
     };
 

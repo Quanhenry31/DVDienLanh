@@ -27,7 +27,7 @@ function Blog() {
                 </div>
                 <div className="row">
                     {categoriBlogs?.map((value, key) => (
-                        <div className="col-lg-4 col-md-6">
+                        <div key={key} className="col-lg-4 col-md-6">
                             <div className="single-blog">
                                 <div className="thumb">
                                     <img className="img-fluid" src={value.Blogs[0].image1} alt="" />

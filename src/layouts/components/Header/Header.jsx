@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { HeartIcon, MagnifyingGlassIcon, ShoppingCartIcon, UserCircleIcon } from '@heroicons/react/24/solid';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -6,15 +6,46 @@ import { faHeadset } from '@fortawesome/free-solid-svg-icons';
 import Chat from '~/components/Chat/Chat';
 
 import { useSelector } from 'react-redux';
+import axios from 'axios';
+import { toast } from 'react-toastify';
+import { AuthContext } from '~/AuthContext';
+
 function Header() {
+    const user = useSelector((state) => state.user.user);
+
     const [chat, setChatBtn] = useState(false);
-    const cart = useSelector((state) => state.cart);
+    const cart = useSelector((state) => state.cart.cart);
     const getTotalQuantity = () => {
         let total = 0;
         cart.forEach((item) => {
             total += item.quantity;
         });
         return total;
+    };
+
+    const logout = () => {
+        if (user.type == 'google') {
+            try {
+                toast.success('Đăng xuất thành công!');
+                setTimeout(() => {
+                    window.open(`${process.env.REACT_APP_API_URL}/auth/logout`, '_self');
+                }, 2000);
+            } catch (err) {
+                toast.success('Đăng xuất lỗi!');
+                console.log(err);
+            }
+        }
+        if (user.type == 'AccountBasic') {
+            try {
+                toast.success('Đăng xuất thành công!');
+                setTimeout(() => {
+                    window.open(`${process.env.REACT_APP_API_URL}/api/users/logout`, '_self');
+                }, 2000);
+            } catch (err) {
+                toast.success('Đăng xuất lỗi!');
+                console.log(err);
+            }
+        }
     };
 
     return (
@@ -27,17 +58,25 @@ function Header() {
                                 <div className="col-lg-7">
                                     <div className="float-left">
                                         <p>Phone: 0789270752</p>
-                                        <p>email: eiservietnam23@gmail.com</p>
+                                        <p>email: dienlanhbackkhoa@gmail.com</p>
                                     </div>
                                 </div>
                                 <div className="col-lg-5">
                                     <div className="float-right">
                                         <ul className="right_side">
+                                            {user.email ? (
+                                                <li>
+                                                    <Link onClick={logout}>Đăng xuất</Link>
+                                                </li>
+                                            ) : (
+                                                <li>
+                                                    <Link to="/login"> Đăng nhập </Link>
+                                                </li>
+                                            )}
                                             <li>
-                                                <Link to="/login"> Đăng nhập </Link>
-                                            </li>
-                                            <li>
-                                                <Link to="/register"> Đăng kí </Link>
+                                                <Link onClick={logout} to="/register">
+                                                    Đăng kí
+                                                </Link>
                                             </li>
                                             <li>
                                                 <a href="contact.html"> VN </a>
@@ -98,8 +137,8 @@ function Header() {
                                                     </Link>
                                                 </li>
                                                 <li className="nav-item submenu dropdown">
-                                                    <a
-                                                        href="#"
+                                                    <Link
+                                                        to="/category"
                                                         className="nav-link dropdown-toggle"
                                                         data-toggle="dropdown"
                                                         role="button"
@@ -107,7 +146,7 @@ function Header() {
                                                         aria-expanded="false"
                                                     >
                                                         Dịch vụ
-                                                    </a>
+                                                    </Link>
                                                 </li>
                                                 <li className="nav-item submenu dropdown">
                                                     <Link
@@ -151,7 +190,15 @@ function Header() {
                                                 </li>
                                                 <li className="nav-item">
                                                     <Link to="/user" className="icons d-flex align-items-center">
-                                                        <UserCircleIcon className="size-8 text-black-500" />
+                                                        {user.email ? (
+                                                            <img
+                                                                src={user?.image}
+                                                                alt=""
+                                                                className="rounded-full w-[20px] h-[20px]"
+                                                            ></img>
+                                                        ) : (
+                                                            <UserCircleIcon className="size-8 text-black-500" />
+                                                        )}
                                                     </Link>
                                                 </li>
                                                 <li className="nav-item">

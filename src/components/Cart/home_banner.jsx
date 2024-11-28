@@ -4,13 +4,15 @@ import CreateLocation from './Models/CreateLocation';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import { useSelector } from 'react-redux';
 
 function HomeBanner() {
     const [create, setCreateBtn] = useState(false);
     const [isdelete, setIsdelete] = useState(false);
     const [address, setAddress] = useState(null);
+    const user = useSelector((state) => state.user.user);
 
-    const idUser = 2;
+    const idUser = user.id;
 
     const fetchProductData = async () => {
         try {

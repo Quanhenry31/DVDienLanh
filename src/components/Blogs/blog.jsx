@@ -25,7 +25,6 @@ function Blog() {
                 });
 
                 setBlogs(response.data.rows);
-                console.log(response);
             } catch (error) {
                 console.error('There was an error fetching the product data!', error);
             }
@@ -174,7 +173,7 @@ function Blog() {
                                             <span>Tất cả</span>
                                         </li>
                                         {categoriBlogs?.map((value, key) => (
-                                            <li>
+                                            <li key={key}>
                                                 <input
                                                     className="!h-[14px] !w-[30px]"
                                                     type="radio"

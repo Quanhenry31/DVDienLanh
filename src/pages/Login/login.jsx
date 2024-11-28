@@ -1,8 +1,52 @@
 import { faFacebook, faGoogle } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Link } from 'react-router-dom';
+import axios from 'axios';
+import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 function Login() {
+    const googleAuth = () => {
+        try {
+            setTimeout(() => {
+                window.open(`${process.env.REACT_APP_API_URL}/auth/google`, '_self');
+            }, 2000);
+            toast.success('Đăng nhập thành công!');
+        } catch (e) {
+            console.log(e);
+        }
+    };
+
+    const [values, setValues] = useState({
+        userName: '',
+        email: '',
+        password: '',
+    });
+
+    const navigate = useNavigate();
+    axios.defaults.withCredentials = true;
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        axios
+            .post('http://localhost:9000/api/users/login', values)
+            .then((res) => {
+                if (res.status === 200) {
+                    navigate('/');
+                    window.location.reload();
+                } else {
+                    alert('Error');
+                }
+            })
+            .catch((error) => {
+                if (error.response.status === 401) {
+                    alert('Password not matched'); // Display message locally
+                } else {
+                    console.error(error);
+                    alert('Error occurred during login');
+                }
+            });
+    };
+
     return (
         <>
             {/* Container */}
@@ -22,19 +66,21 @@ function Login() {
                         {/* Col */}
                         <div className="w-full lg:w-1/2 bg-white p-5 rounded-lg lg:rounded-l-none">
                             <h3 className="pt-4  text-center text-[40px]">Welcome Back!</h3>
-                            <form className="px-8 pt-6 pb-8 mb-4 bg-white rounded">
+                            <form onSubmit={handleSubmit} formclassName="px-8 pt-6 pb-8 mb-4 bg-white rounded">
                                 <div className="mb-4">
                                     <label
                                         className=" text-[12px] block  mb-2 text-sm font-bold text-gray-700"
-                                        htmlFor="username"
+                                        htmlFor="email"
                                     >
-                                        Username
+                                        Email
                                     </label>
                                     <input
                                         className="text-[16px] w-full h-[50px] px-3 py-2 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
-                                        id="username"
+                                        id="email"
                                         type="text"
-                                        placeholder="Username"
+                                        placeholder="email"
+                                        name="email"
+                                        onChange={(e) => setValues({ ...values, email: e.target.value })}
                                     />
                                 </div>
                                 <div className="mb-4">
@@ -48,7 +94,9 @@ function Login() {
                                         className=" text-[16px] w-full h-[50px] px-3 py-2 mb-3 text-sm leading-tight text-gray-700 border border-red-500 rounded shadow appearance-none focus:outline-none focus:shadow-outline"
                                         id="password"
                                         type="password"
-                                        placeholder="******************"
+                                        name="password"
+                                        // placeholder="******************"
+                                        onChange={(e) => setValues({ ...values, password: e.target.value })}
                                     />
                                     <p className="text-xs italic text-red-500">Please choose a password.</p>
                                 </div>
@@ -61,7 +109,7 @@ function Login() {
                                 <div className="mb-6 text-center">
                                     <button
                                         className="w-full h-[50px] px-4 py-2 font-bold text-white bg-blue-500 rounded-full hover:bg-blue-700 focus:outline-none focus:shadow-outline"
-                                        type="button"
+                                        type="submit"
                                     >
                                         Sign In
                                     </button>
@@ -91,6 +139,7 @@ function Login() {
                                         <button
                                             className="flex items-center justify-center w-[90px] h-[50px] px-4 py-2 font-bold text-white bg-blue-500 rounded-[5px] hover:bg-blue-700 focus:outline-none focus:shadow-outline"
                                             type="button"
+                                            onClick={googleAuth}
                                         >
                                             <FontAwesomeIcon icon={faGoogle} size="2xs" className="size-[40px]" />
                                         </button>

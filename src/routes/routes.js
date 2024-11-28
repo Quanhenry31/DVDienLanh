@@ -2,6 +2,9 @@ import config from '~/config';
 
 // Layout
 import layouts, { HeaderOnly } from '~/layouts';
+import CallBack from '~/pages/Callback';
+import CallBackPaypal from '~/pages/CallbackPaypal';
+import CallbackMomo from '~/pages/CallbackMomo';
 
 import BlogDetail from '~/pages/BlogDetail';
 import Blogs from '~/pages/Blogs';
@@ -14,9 +17,8 @@ import Login from '~/pages/Login';
 import Register from '~/pages/Register';
 import Order from '~/pages/Order';
 import User from '~/pages/User';
-import CallBack from '~/pages/Callback';
-import CallBackPaypal from '~/pages/CallbackPaypal';
-import CallbackMomo from '~/pages/CallbackMomo';
+import ServicesOrder from '~/pages/ServcesOrder';
+import ServicesUsually from '~/pages/ServicesUsually';
 
 const publicRoutes = [
     { path: config.routes.blogDetail, component: BlogDetail },
@@ -27,6 +29,8 @@ const publicRoutes = [
     { path: config.routes.home, component: Home },
     { path: config.routes.order, component: Order },
     { path: config.routes.user, component: User },
+    { path: config.routes.servicesOrder, component: ServicesOrder },
+    { path: config.routes.ServicesUsually, component: ServicesUsually },
     { path: config.routes.callback, component: CallBack, layout: null },
     { path: config.routes.callbackPaypal, component: CallBackPaypal, layout: null },
     { path: config.routes.callbackMomo, component: CallbackMomo, layout: null },

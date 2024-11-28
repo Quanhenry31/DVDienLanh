@@ -20,7 +20,7 @@ const Slideshow = () => {
     return (
         <Slide {...properties}>
             {images.map((image, index) => (
-                <div className="grid place-items-center">
+                <div key={index} className="grid place-items-center">
                     <div
                         key={index}
                         className="relative w-[1000px] h-[500px] bg-cover bg-cover mb-[50px]"

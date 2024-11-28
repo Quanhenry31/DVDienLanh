@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Modal, Input, Form, Button, List, Typography, Avatar } from 'antd';
 import { toast } from 'react-toastify';
 import axios from 'axios';
+import { useSelector } from 'react-redux';
 
 const { Text } = Typography;
 
@@ -10,7 +11,10 @@ const Chat = (props) => {
     const [form] = Form.useForm();
     const [messages, setMessages] = useState([]);
     const messagesEndRef = useRef(null);
-    const userID = 2;
+    const user = useSelector((state) => state.user.user);
+    const userID = user?.id;
+    // const userID = 2;
+    const userAdminID = 3;
     useEffect(() => {
         const fetchMessages = async () => {
             try {
@@ -19,12 +23,12 @@ const Chat = (props) => {
 
                 // Fetch dữ liệu tin nhắn từ user mới
                 const userResponse = await axios.get(`http://localhost:9000/api/users/${userID}`);
-                const adminResponse = await axios.get(`http://localhost:9000/api/userchats/3/${userID}`);
+                const adminResponse = await axios.get(`http://localhost:9000/api/userchats/${userAdminID}/${userID}`);
 
                 const userMessages = userResponse.data.data.userChats.map((chat) => ({
                     type: 'user',
                     text: chat.name1,
-                    avatar: 'https://cellphones.com.vn/sforum/wp-content/uploads/2024/02/anh-avatar-cute-84.jpg',
+                    avatar: user.image,
                     name: userResponse.data.data.userName,
                     time: new Date(chat.createdAt),
                 }));
@@ -43,24 +47,30 @@ const Chat = (props) => {
                 setMessages(allMessages);
             } catch (error) {
                 console.error('Failed to fetch messages:', error);
-                toast.error('Failed to load messages');
             }
         };
 
         // Set up an interval to fetch messages periodically
-        const intervalId = setInterval(fetchMessages, 30000); // Fetch every 5 seconds
+        const intervalId = setInterval(fetchMessages, 30000);
 
         // Clean up the interval on component unmount
         fetchMessages();
         return () => clearInterval(intervalId);
     }, [userID]); // Cập nhật khi userID thay đổi
 
-    const scrollToBottom = () => {
-        messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-    };
-
+    // Tự động cuộn xuống khi có tin nhắn mới
+    // useEffect(() => {
+    //     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    // }, [messages]);
     useEffect(() => {
-        scrollToBottom();
+        const isAtBottom =
+            messagesEndRef.current?.scrollHeight ===
+            messagesEndRef.current?.scrollTop + messagesEndRef.current?.clientHeight;
+
+        // Nếu người dùng đang ở dưới cùng, không cuộn tự động
+        if (isAtBottom) {
+            messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+        }
     }, [messages]);
 
     const handleCloseChatModal = () => {
@@ -120,9 +130,9 @@ const Chat = (props) => {
             maskClosable={true}
             footer={null}
             width={600}
-            style={{ top: 300, right: 20, position: 'fixed' }}
+            style={{ top: 100, right: 90, position: 'fixed' }}
         >
-            <div className="max-h-[300px] overflow-y-auto mb-4">
+            <div className="max-h-[400px] overflow-y-auto mb-4">
                 <List
                     dataSource={messages}
                     renderItem={(message) => (
