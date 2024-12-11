@@ -10,12 +10,48 @@ function Product() {
     const dispatch = useDispatch();
     const [listOfPosts, setListOfPosts] = useState([]);
     const [size, setSize] = useState({});
+    const [loading, setLoading] = useState(true);
+    const [IdProductLQ, setIdProductLQ] = useState({});
 
+    // Lấy IdProductLQ từ localStorage khi component mount
     useEffect(() => {
-        axios.get('http://localhost:9000/api/products/all').then((response) => {
-            setListOfPosts(response.data.data);
-        });
-    }, []);
+        const IdProductLQlocal = localStorage.getItem('IdProductLQ');
+        if (IdProductLQlocal) {
+            setIdProductLQ(IdProductLQlocal); // Chỉ cập nhật state khi có giá trị trong localStorage
+        }
+    }, []); // Chạy 1 lần khi component mount
+
+    // Khi IdProductLQ thay đổi, lấy dữ liệu sản phẩm liên quan
+    useEffect(() => {
+        if (IdProductLQ) {
+            // Kiểm tra nếu IdProductLQ có giá trị
+            axios
+                .get(`http://localhost:9000/api/products/productLQ/${IdProductLQ}`)
+                .then((response) => {
+                    setListOfPosts(response.data.data.relatedProducts);
+                    setLoading(false);
+                })
+                .catch((error) => {
+                    console.error('There was an error fetching the product data!', error);
+                    setLoading(false);
+                });
+        }
+    }, [IdProductLQ]); // Chạy lại khi IdProductLQ thay đổi
+
+    // Khi click vào sản phẩm, lưu Id vào localStorage và cập nhật state
+    const handleClick = (id) => {
+        localStorage.setItem('IdProductLQ', id); // Lưu Id vào localStorage
+        setIdProductLQ(id); // Cập nhật IdProductLQ vào state
+    };
+
+    // Hiển thị loading hoặc sản phẩm liên quan
+    if (loading) {
+        return <div>Loading...</div>;
+    }
+
+    if (listOfPosts.length === 0) {
+        return <div>Product not found</div>;
+    }
 
     const handleSizeChange = (productId, newSize) => {
         setSize((prevSizes) => ({ ...prevSizes, [productId]: newSize }));
@@ -30,7 +66,6 @@ function Product() {
         dispatch(addToCart({ ...product, size: selectedSize }));
         toast.success(`Added ${product.name} (${selectedSize}) to cart!`);
     };
-
     return (
         <section className="inspired_product_area section_gap_bottom_custom">
             <div className="container">
@@ -40,7 +75,7 @@ function Product() {
                             <h2>
                                 <span>Sản phẩm liên quan</span>
                             </h2>
-                            <p>Bring called seed first of third give itself now ment</p>
+                            <p>Những sản phẩm được đề xuất với bạn</p>
                         </div>
                     </div>
                 </div>
@@ -57,7 +92,11 @@ function Product() {
                                         />
                                     </div>
                                     <div className="p_icon d-flex justify-center items-center">
-                                        <Link to={`/detail/${value.id}`} className="d-flex justify-center items-center">
+                                        <Link
+                                            to={`/detail/${value.id}`}
+                                            className="d-flex justify-center items-center"
+                                            onClick={() => handleClick(value.id)}
+                                        >
                                             <EyeIcon className="size-8 text-black-500" />
                                         </Link>
                                         <a href="#" className="d-flex justify-center items-center">
@@ -77,7 +116,7 @@ function Product() {
                                     </a>
                                     <div className="mt-3 flex items-center justify-between">
                                         <div>
-                                            <span className="mr-4">{value.price} vnđ</span>
+                                            <span className="mr-4">{value.price.toLocaleString('vi-VN')} vnđ</span>
                                         </div>
                                         <select
                                             className="!text-[18px] rounded border appearance-none border-gray-400 py-3 focus:outline-none focus:border-red-500 text-base pl-3 pr-10 ml-auto"

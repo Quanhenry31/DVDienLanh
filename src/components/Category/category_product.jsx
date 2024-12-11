@@ -47,7 +47,7 @@ function CategoryProduct() {
                         categoryID: searchParams.get('category'),
                         sort: searchParams.get('sort') ?? 'ASC',
                         page: 1,
-                        pageSize: searchParams.get('pageSize') ?? 2,
+                        pageSize: searchParams.get('pageSize'),
                         name: searchParams.get('name'),
                     },
                 });
@@ -251,7 +251,9 @@ function CategoryProduct() {
                                                         <h4>{value.name}</h4>
                                                     </a>
                                                     <div className="mt-3 flex items-center justify-between">
-                                                        <span className="mr-4">{value.price} vnđ</span>
+                                                        <span className="mr-4">
+                                                            {value.price.toLocaleString('vi-VN')} vnđ
+                                                        </span>
 
                                                         <select
                                                             className="!text-[18px] rounded border appearance-none border-gray-400 py-3 focus:outline-none focus:border-red-500 text-base pl-3 pr-10 ml-auto"

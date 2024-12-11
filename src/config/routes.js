@@ -1,4 +1,5 @@
 const routes = {
+    //User
     home: '/',
     blogDetail: '/blogDetail/:id',
     blog: '/blog',
@@ -16,8 +17,23 @@ const routes = {
     callback: '/callback',
     callbackPaypal: '/callbackPaypal',
     callbackMomo: '/callbackMomo',
-
-    // admin: '/admin',
+    //User
+    //Admin
+    admin: '/admin',
+    ADthongKe: '/thongke',
+    ADsanPham: '/sanpham',
+    ADprofile: '/:nickname',
+    ADupload: '/upload',
+    ADhoaDon: '/hoaDon',
+    ADchats: '/chat',
+    ADpayment: '/payment',
+    ADuser: '/ADuser',
+    ADinvoice: '/:id/details',
+    ADblog: '/AdminBlog',
+    ADservicesDay: '/servicesDay',
+    ADservicesUsually: '/ADservicesUsually',
+    ADpackage: '/package',
+    //Admin
 };
 
 export default routes;

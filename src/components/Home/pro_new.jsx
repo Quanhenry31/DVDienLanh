@@ -11,9 +11,16 @@ function ProductNew() {
     const [listOfPosts, setListOfPosts] = useState([]);
     const [size, setSize] = useState({});
     useEffect(() => {
-        axios.get('http://localhost:9000/api/products/all').then((response) => {
-            setListOfPosts(response.data.data);
-        });
+        axios
+            .get('http://localhost:9000/api/products/all')
+            .then((response) => {
+                const data = response.data.data; // Dữ liệu gốc
+                const lastTwoItems = data.slice(-2); // Lấy 2 phần tử cuối cùng
+                setListOfPosts(lastTwoItems); // Cập nhật state
+            })
+            .catch((error) => {
+                console.error('Error fetching data:', error);
+            });
     }, []);
 
     const handleSizeChange = (productId, newSize) => {
@@ -90,7 +97,7 @@ function ProductNew() {
                                                 <h4>{value.name}</h4>
                                             </a>
                                             <div className="mt-3 flex items-center justify-between">
-                                                <span className="mr-4">{value.price}vnđ</span>
+                                                <span className="mr-4">{value.price.toLocaleString('vi-VN')} vnđ</span>
                                                 <select
                                                     className="!text-[18px] rounded border appearance-none border-gray-400 py-3 focus:outline-none focus:border-red-500 text-base pl-3 pr-10 ml-auto"
                                                     onChange={(e) => handleSizeChange(value.id, e.target.value)}

@@ -18,7 +18,6 @@ export const AuthProvider = ({ children }) => {
                 } else {
                     setAuth(true);
                     setUser(res.data);
-                    console.log(res.data);
                 }
             })
             .catch((err) => {

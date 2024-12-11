@@ -19,6 +19,7 @@ function SingleProduct() {
     const [listOfSoluongCheck, setListOfSoluongCheck] = useState([]);
     const [thongSo, setThongSo] = useState(null);
 
+    localStorage.setItem('IdProductLQ', id);
     useEffect(() => {
         setSearchParams((params) => {
             params.delete('size');
@@ -162,7 +163,7 @@ function SingleProduct() {
                         <div className="s_product_text">
                             <h3>{product.name}</h3>
                             {/* <h2>{product.price} VND</h2> */}
-                            <h2>{listOfSoluong[0]?.price || 0} VND</h2>
+                            <h2>{listOfSoluong[0]?.price.toLocaleString('vi-VN') || 0} VND</h2>
                             <ul className="list">
                                 <li>
                                     <a className="active" href="#">

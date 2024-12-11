@@ -49,13 +49,13 @@ const Chat = (props) => {
                 console.error('Failed to fetch messages:', error);
             }
         };
-
-        // Set up an interval to fetch messages periodically
-        const intervalId = setInterval(fetchMessages, 30000);
-
-        // Clean up the interval on component unmount
-        fetchMessages();
-        return () => clearInterval(intervalId);
+        if (userID) {
+            // Set up an interval to fetch messages periodically
+            const intervalId = setInterval(fetchMessages, 30000);
+            // Clean up the interval on component unmount
+            fetchMessages();
+            return () => clearInterval(intervalId);
+        }
     }, [userID]); // Cập nhật khi userID thay đổi
 
     // Tự động cuộn xuống khi có tin nhắn mới

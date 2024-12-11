@@ -21,7 +21,7 @@ function Blog() {
                             <h2>
                                 <span>Bài viết mới</span>
                             </h2>
-                            <p>Tin tức mơi nhất về điện lạnh</p>
+                            <p>Tin tức mới nhất về điện lạnh</p>
                         </div>
                     </div>
                 </div>

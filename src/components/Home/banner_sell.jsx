@@ -3,7 +3,9 @@ function BannerSell() {
         <section
             className="relative bg-cover bg-center bg-no-repeat"
             style={{
-                backgroundImage: "url('https://themewagon.github.io/eiser/img/offer-bg.png')",
+                backgroundImage:
+                    "url('https://cdn.pixabay.com/photo/2022/06/17/09/35/air-conditioner-7267527_1280.jpg')",
+                // backgroundImage: "url('https://themewagon.github.io/eiser/img/offer-bg.png')",
                 backgroundSize: 'cover',
             }}
         >
@@ -16,7 +18,7 @@ function BannerSell() {
                             <a href="#" className="main_btn mb-20 mt-5">
                                 Cửa hàng
                             </a>
-                            <p>Tiện lợi - nhanh chóng - bảo hành chính hãng</p>
+                            <p className="text-[#fff]">Tiện lợi - nhanh chóng - bảo hành chính hãng</p>
                         </div>
                     </div>
                 </div>

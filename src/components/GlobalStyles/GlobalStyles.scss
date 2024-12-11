@@ -2,9 +2,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
+@import '~bootstrap/scss/bootstrap';
 :root {
-    --primary: #e1b22d;
+    --primary: #fe2c55;
     --black: #000;
     --text-color: #000;
     --white: #fff;
@@ -110,4 +110,42 @@ ul {
     font-family: Brands;
     src: url('/assets/fonts/UcC73FwrK3iLTeHuS_fvQtMwCp50KnMa1ZL7.woff2');
     font-weight: 700;
+}
+
+// Fonts embeded
+@font-face {
+    font-family: ProximaNova;
+    src: url('/assets/fonts/TikTokFont-Regular.woff2');
+    font-weight: 400;
+}
+@font-face {
+    font-family: ProximaNova;
+    src: url('/assets/fonts/TikTokFont-Semibold.woff2');
+    font-weight: 600;
+}
+@font-face {
+    font-family: ProximaNova;
+    src: url('/assets/fonts/TikTokDisplayFont-Bold.woff2');
+    font-weight: 700;
+}
+@font-face {
+    font-family: TikTokFont;
+    src: url('/assets/fonts/TikTokFont-Bold.woff2');
+    font-weight: 700;
+}
+// Custom tippy tolltip
+body {
+    .tippy-box {
+        border-radius: 8px;
+        font-weight: 600;
+        font-style: 1.6rem;
+        line-height: 2.2rem;
+        background-color: rgba(84, 84, 84, 0.92);
+    }
+    .tippy-arrow {
+        color: rgba(84, 84, 84, 0.92);
+    }
+    .tippy-box[data-placement^='bottom'] > .tippy-arrow:before {
+        top: -8px;
+    }
 }

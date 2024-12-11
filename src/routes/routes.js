@@ -1,24 +1,39 @@
 import config from '~/config';
 
-// Layout
+// Layout Users
 import layouts, { HeaderOnly } from '~/layouts';
-import CallBack from '~/pages/Callback';
-import CallBackPaypal from '~/pages/CallbackPaypal';
-import CallbackMomo from '~/pages/CallbackMomo';
+import CallBack from '~/pages/Users/Callback';
+import CallBackPaypal from '~/pages/Users/CallbackPaypal';
+import CallbackMomo from '~/pages/Users/CallbackMomo';
 
-import BlogDetail from '~/pages/BlogDetail';
-import Blogs from '~/pages/Blogs';
-import Cart from '~/pages/Cart';
-import Category from '~/pages/Category';
-import Detail from '~/pages/Detail';
-import Home from '~/pages/Home';
-import Invoice from '~/pages/Invoice';
-import Login from '~/pages/Login';
-import Register from '~/pages/Register';
-import Order from '~/pages/Order';
-import User from '~/pages/User';
-import ServicesOrder from '~/pages/ServcesOrder';
-import ServicesUsually from '~/pages/ServicesUsually';
+import BlogDetail from '~/pages/Users/BlogDetail';
+import Blogs from '~/pages/Users/Blogs';
+import Cart from '~/pages/Users/Cart';
+import Category from '~/pages/Users/Category';
+import Detail from '~/pages/Users/Detail';
+import Home from '~/pages/Users/Home';
+import Invoice from '~/pages/Users/Invoice';
+import Login from '~/pages/Users/Login';
+import Register from '~/pages/Users/Register';
+import Order from '~/pages/Users/Order';
+import User from '~/pages/Users/User';
+import ServicesOrder from '~/pages/Users/ServcesOrder';
+import ServicesUsually from '~/pages/Users/ServicesUsually';
+// Layout Admin
+import Admin from '~/pages/Admin/Home';
+import AdThongKe from '~/pages/Admin/Thongke';
+import AdSanPham from '~/pages/Admin/SanPham';
+import AdProfile from '~/pages/Admin/Profile';
+import AdUpload from '~/pages/Admin/Upload';
+import AdHoaDon from '~/pages/Admin/HoaDon';
+import AdChats from '~/pages/Admin/Chats';
+import AdUser from '~/pages/Admin/KhachHang';
+import AdPayment from '~/pages/Admin/Payment';
+import AdInvoice from '~/pages/Admin/Invoice';
+import AdBlog from '~/pages/Admin/Blogs';
+import AdServicesUsually from '~/pages/Admin/Services/ServicesUsually';
+import AdServicesDay from '~/pages/Admin/Services/ServicesDay';
+import AdPackage from '~/pages/Admin/Services/ServicesUsually/Package';
 
 const publicRoutes = [
     { path: config.routes.blogDetail, component: BlogDetail },
@@ -34,10 +49,30 @@ const publicRoutes = [
     { path: config.routes.callback, component: CallBack, layout: null },
     { path: config.routes.callbackPaypal, component: CallBackPaypal, layout: null },
     { path: config.routes.callbackMomo, component: CallbackMomo, layout: null },
+    // { path: config.routes.login, component: Login, layout: null },
+    // { path: config.routes.register, component: Register, layout: null },
+];
+const privateRoutes = [{ path: config.routes.invoice, component: Invoice, layout: null }];
+
+const adminRoutes = [
+    { path: config.routes.admin, component: Admin },
+    { path: config.routes.ADthongKe, component: AdThongKe },
+    { path: config.routes.ADsanPham, component: AdSanPham },
+    { path: config.routes.ADprofile, component: AdProfile },
+    { path: config.routes.ADupload, component: AdUpload },
+    { path: config.routes.ADhoaDon, component: AdHoaDon },
+    { path: config.routes.ADchats, component: AdChats },
+    { path: config.routes.ADuser, component: AdUser },
+    { path: config.routes.ADpayment, component: AdPayment },
+    { path: config.routes.ADinvoice, component: AdInvoice },
+    { path: config.routes.ADblog, component: AdBlog },
+    { path: config.routes.ADservicesDay, component: AdServicesUsually },
+    { path: config.routes.ADservicesUsually, component: AdServicesDay },
+    { path: config.routes.ADpackage, component: AdPackage },
+];
+
+const authRoutes = [
     { path: config.routes.login, component: Login, layout: null },
     { path: config.routes.register, component: Register, layout: null },
 ];
-
-const privateRoutes = [{ path: config.routes.invoice, component: Invoice, layout: null }];
-
-export { publicRoutes, privateRoutes };
+export { publicRoutes, privateRoutes, adminRoutes, authRoutes };
