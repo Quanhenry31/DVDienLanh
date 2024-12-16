@@ -17,7 +17,7 @@ const Create = (props) => {
 
     const onFinish = async (values) => {
         try {
-            const response = await axios.post('http://localhost:9000/api/servicesTimeUsually', values);
+            const response = await axios.post('http://localhost:9000/api/categorys', values);
             console.log(response);
             handleCloseCreateModal();
             message.success('Thêm thành công!');
@@ -40,15 +40,27 @@ const Create = (props) => {
                 width={800} // Tăng chiều rộng để bố cục ngang thoáng hơn
             >
                 <Form name="basic" onFinish={onFinish} layout="vertical" form={form}>
-                    <Row gutter={16}>
+                    <Row gutter={24}>
                         {/* Cột 1 */}
-                        <Col span={12}>
+                        <Col span={24}>
                             <Form.Item
                                 label="Tên gói"
                                 name="name"
-                                rules={[{ required: true, message: 'Vui lòng nhập tên gói!' }]}
+                                rules={[{ required: true, message: 'Vui lòng nhập tên loại máy!' }]}
                             >
                                 <Input />
+                            </Form.Item>
+                        </Col>
+                    </Row>
+                    <Row gutter={24}>
+                        {/* Cột 1 */}
+                        <Col span={24}>
+                            <Form.Item
+                                label="Mô tả"
+                                name="description"
+                                rules={[{ required: true, message: 'Vui lòng nhập mô tả!' }]}
+                            >
+                                <Input.TextArea />
                             </Form.Item>
                         </Col>
                     </Row>

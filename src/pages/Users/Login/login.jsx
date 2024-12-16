@@ -27,6 +27,17 @@ function Login() {
     axios.defaults.withCredentials = true;
     const handleSubmit = (event) => {
         event.preventDefault();
+        // Kiểm tra dữ liệu trước khi gửi
+
+        if (!values.password) {
+            toast.error('Mật khẩu là bắt buộc');
+            return;
+        }
+        if (!values.email.endsWith('@gmail.com')) {
+            toast.error('Email phải kết thúc bằng @gmail.com');
+            return;
+        }
+
         axios
             .post('http://localhost:9000/api/users/login', values)
             .then((res) => {
@@ -69,14 +80,11 @@ function Login() {
                             <h3 className="pt-4  text-center text-[40px]">Welcome Back!</h3>
                             <form onSubmit={handleSubmit} formclassName="px-8 pt-6 pb-8 mb-4 bg-white rounded">
                                 <div className="mb-4">
-                                    <label
-                                        className=" text-[12px] block  mb-2 text-sm font-bold text-gray-700"
-                                        htmlFor="email"
-                                    >
+                                    <label className=" text-[12px] block  mb-2 font-bold text-gray-700" htmlFor="email">
                                         Email
                                     </label>
                                     <input
-                                        className="text-[16px] w-full h-[50px] px-3 py-2 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+                                        className="text-[24px] w-full h-[50px] px-3 py-2 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
                                         id="email"
                                         type="text"
                                         placeholder="email"
@@ -86,13 +94,13 @@ function Login() {
                                 </div>
                                 <div className="mb-4">
                                     <label
-                                        className="  text-[12px] block mb-2 text-sm font-bold text-gray-700"
+                                        className="  text-[12px] block mb-2      font-bold text-gray-700"
                                         htmlFor="password"
                                     >
                                         Password
                                     </label>
                                     <input
-                                        className=" text-[16px] w-full h-[50px] px-3 py-2 mb-3 text-sm leading-tight text-gray-700 border border-red-500 rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+                                        className=" text-[24px] w-full h-[50px] px-3 py-2 mb-3 text-sm leading-tight text-gray-700 border border-red-500 rounded shadow appearance-none focus:outline-none focus:shadow-outline"
                                         id="password"
                                         type="password"
                                         name="password"

@@ -34,6 +34,9 @@ import AdBlog from '~/pages/Admin/Blogs';
 import AdServicesUsually from '~/pages/Admin/Services/ServicesUsually';
 import AdServicesDay from '~/pages/Admin/Services/ServicesDay';
 import AdPackage from '~/pages/Admin/Services/ServicesUsually/Package';
+import AdCategory from '~/pages/Admin/Category';
+import AdBrand from '~/pages/Admin/Brand';
+import AdVoucher from '~/pages/Admin/Voucher';
 
 const publicRoutes = [
     { path: config.routes.blogDetail, component: BlogDetail },
@@ -66,9 +69,12 @@ const adminRoutes = [
     { path: config.routes.ADpayment, component: AdPayment },
     { path: config.routes.ADinvoice, component: AdInvoice },
     { path: config.routes.ADblog, component: AdBlog },
-    { path: config.routes.ADservicesDay, component: AdServicesUsually },
-    { path: config.routes.ADservicesUsually, component: AdServicesDay },
+    { path: config.routes.ADservicesDay, component: AdServicesDay },
+    { path: config.routes.ADservicesUsually, component: AdServicesUsually },
     { path: config.routes.ADpackage, component: AdPackage },
+    { path: config.routes.ADcategory, component: AdCategory },
+    { path: config.routes.ADbrand, component: AdBrand },
+    { path: config.routes.ADvoucher, component: AdVoucher },
 ];
 
 const authRoutes = [

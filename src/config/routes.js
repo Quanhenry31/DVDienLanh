@@ -33,6 +33,9 @@ const routes = {
     ADservicesDay: '/servicesDay',
     ADservicesUsually: '/ADservicesUsually',
     ADpackage: '/package',
+    ADcategory: '/ADcategory',
+    ADbrand: '/ADbrand',
+    ADvoucher: '/ADvoucher',
     //Admin
 };
 

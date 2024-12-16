@@ -5,11 +5,11 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import Create from './Create';
 import UpdateProduct from './Edit';
-import SearchProduct from '../Search';
+import SearchProduct from './Search';
 import { useDebounce } from '~/hooks';
 import dayjs from 'dayjs';
 
-const Category = () => {
+const Package = () => {
     const [listOfPosts, setListOfPosts] = useState([]);
     const [create, setCreateBtn] = useState(false);
     const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
@@ -23,7 +23,6 @@ const Category = () => {
     //     .get('http://localhost:9000/api/products?sort=ASC&page=1&name=' + debounceValue)
     //     .then((response) => setListOfPosts(response.data.rows));
     // };
-
     const columns = [
         {
             title: 'ID',
@@ -31,22 +30,16 @@ const Category = () => {
             key: 'id',
         },
         {
-            title: 'Tên gói',
+            title: 'Tên loại máy',
             dataIndex: 'name',
             key: 'name',
             render: (text) => <a>{text}</a>,
         },
         {
-            title: 'Ngày tạo',
-            dataIndex: 'createdAt',
-            key: 'createdAt',
-            render: (text) => dayjs(text).format('DD/MM/YYYY HH:mm:ss'), // Format ngày
-        },
-        {
-            title: 'Ngày cập nhập mới nhất',
-            dataIndex: 'updatedAt',
-            key: 'updatedAt',
-            render: (text) => dayjs(text).format('DD/MM/YYYY HH:mm:ss'), // Format ngày
+            title: 'Mô tả',
+            dataIndex: 'description',
+            key: 'description',
+            render: (text) => <a>{text}</a>,
         },
         {
             title: 'Hành động',
@@ -83,7 +76,7 @@ const Category = () => {
     const handleDeleteProduct = async (data) => {
         if (data.id) {
             try {
-                await axios.delete('http://localhost:9000/api/servicesTimeUsually/' + data.id);
+                await axios.delete('http://localhost:9000/api/categorys/' + data.id);
                 setIsdelete(true);
             } catch (error) {
                 console.log(error);
@@ -116,7 +109,7 @@ const Category = () => {
     // }, [debounceValue]);
 
     useEffect(() => {
-        axios.get('http://localhost:9000/api/servicesTimeUsually').then((response) => {
+        axios.get('http://localhost:9000/api/categorys').then((response) => {
             setListOfPosts(response.data.data);
             setIsdelete(false);
         });
@@ -136,4 +129,4 @@ const Category = () => {
     );
 };
 
-export default Category;
+export default Package;

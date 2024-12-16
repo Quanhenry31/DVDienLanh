@@ -37,8 +37,8 @@ function Register() {
             toast.error('Email phải kết thúc bằng @gmail.com');
             return;
         }
-        if (isNaN(values.phone) || values.phone.length !== 10) {
-            toast.error('Số điện thoại phải là số có 10 chữ số');
+        if (isNaN(values.phone) || values.phone.length !== 10 || values.phone.charAt(0) !== '0') {
+            toast.error('Số điện thoại phải bắt đầu bằng số 0 và có 10 chữ số');
             return;
         }
 
@@ -74,59 +74,47 @@ function Register() {
                     <div className="w-full lg:w-1/2 bg-white pl-5 rounded-lg lg:rounded-l-none">
                         <h3 className="text-center text-[40px]">Welcome Back!</h3>
                         <form onSubmit={handleSubmit} className="px-8 pt-6 pb-8 mb-4 bg-white rounded">
-                            <div className="mb-4">
-                                <label
-                                    className="text-[12px] block mb-2 text-sm font-bold text-gray-700"
-                                    htmlFor="username"
-                                >
+                            <div className="mb-2">
+                                <label className="text-[12px] block mb-2 font-bold text-gray-700" htmlFor="username">
                                     Username
                                 </label>
                                 <input
-                                    className="text-[16px] w-full h-[50px] px-3 py-2 text-sm leading-tight text-gray-700 border rounded shadow focus:outline-none focus:shadow-outline"
+                                    className="text-[24px] w-full h-[50px] px-3 py-2 text-sm leading-tight text-gray-700 border rounded shadow focus:outline-none focus:shadow-outline"
                                     id="username"
                                     type="text"
                                     placeholder="Username"
                                     onChange={(e) => setValues({ ...values, userName: e.target.value })}
                                 />
                             </div>
-                            <div className="mb-4">
-                                <label
-                                    className="text-[12px] block mb-2 text-sm font-bold text-gray-700"
-                                    htmlFor="password"
-                                >
+                            <div className="mb-2">
+                                <label className="text-[12px] block font-bold text-gray-700" htmlFor="password">
                                     Password
                                 </label>
                                 <input
-                                    className="text-[16px] w-full h-[50px] px-3 py-2 mb-3 text-sm leading-tight text-gray-700 border rounded shadow focus:outline-none focus:shadow-outline"
+                                    className="text-[24px] w-full h-[50px] px-3 py-2  text-sm leading-tight text-gray-700 border rounded shadow focus:outline-none focus:shadow-outline"
                                     id="password"
                                     type="password"
                                     onChange={(e) => setValues({ ...values, password: e.target.value })}
                                 />
                             </div>
-                            <div className="mb-4">
-                                <label
-                                    className="text-[12px] block mb-2 text-sm font-bold text-gray-700"
-                                    htmlFor="email"
-                                >
+                            <div className="mb-2">
+                                <label className="text-[12px] block mb-2 font-bold text-gray-700" htmlFor="email">
                                     Email
                                 </label>
                                 <input
-                                    className="text-[16px] w-full h-[50px] px-3 py-2 text-sm leading-tight text-gray-700 border rounded shadow focus:outline-none focus:shadow-outline"
+                                    className="text-[24px] w-full h-[50px] px-3 py-2 text-sm leading-tight text-gray-700 border rounded shadow focus:outline-none focus:shadow-outline"
                                     id="email"
                                     type="email"
                                     placeholder="Email"
                                     onChange={(e) => setValues({ ...values, email: e.target.value })}
                                 />
                             </div>
-                            <div className="mb-4">
-                                <label
-                                    className="text-[12px] block mb-2 text-sm font-bold text-gray-700"
-                                    htmlFor="phone"
-                                >
+                            <div className="mb-2">
+                                <label className="text-[12px] block mb-2 font-bold text-gray-700" htmlFor="phone">
                                     Phone
                                 </label>
                                 <input
-                                    className="text-[16px] w-full h-[50px] px-3 py-2 text-sm leading-tight text-gray-700 border rounded shadow focus:outline-none focus:shadow-outline"
+                                    className="text-[24px] w-full h-[50px] px-3 py-2 text-sm leading-tight text-gray-700 border rounded shadow focus:outline-none focus:shadow-outline"
                                     id="phone"
                                     type="text"
                                     placeholder="Phone"
@@ -134,14 +122,11 @@ function Register() {
                                 />
                             </div>
                             <div className="mb-4">
-                                <label
-                                    className="text-[12px] block mb-2 text-sm font-bold text-gray-700"
-                                    htmlFor="address"
-                                >
+                                <label className="text-[12px] block mb-2 font-bold text-gray-700" htmlFor="address">
                                     Address
                                 </label>
                                 <input
-                                    className="text-[16px] w-full h-[50px] px-3 py-2 text-sm leading-tight text-gray-700 border rounded shadow focus:outline-none focus:shadow-outline"
+                                    className="text-[24px] w-full h-[50px] px-3 py-2 text-sm leading-tight text-gray-700 border rounded shadow focus:outline-none focus:shadow-outline"
                                     id="address"
                                     type="text"
                                     placeholder="Address"
@@ -178,13 +163,13 @@ function Register() {
                                     type="button"
                                     onClick={googleAuth}
                                 >
-                                    <FontAwesomeIcon icon={faGoogle} size="2xs" />
+                                    <FontAwesomeIcon icon={faGoogle} size="24px" />
                                 </button>
                                 <button
                                     className="flex items-center justify-center w-[90px] h-[50px] px-4 py-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700 focus:outline-none"
                                     type="button"
                                 >
-                                    <FontAwesomeIcon icon={faFacebook} size="2xs" />
+                                    <FontAwesomeIcon icon={faFacebook} size="24px" />
                                 </button>
                             </div>
                         </form>

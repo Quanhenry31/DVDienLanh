@@ -327,6 +327,7 @@ function CartProduct() {
                         .then((response) => {
                             console.log('API Response:', response.data);
                             toast.success('Thanh toán thành công!');
+                            window.location.href = 'http://localhost:3000/category';
                         })
                         .catch((error) => {
                             console.error('API Error:', error);

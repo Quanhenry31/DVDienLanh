@@ -25,6 +25,12 @@ import {
     MaintenanceActiveIcon,
     PeriodicMaintenanceIcon,
     PeriodicMaintenanceActiveIcon,
+    CategoryIcon,
+    CategoryActiveIcon,
+    BrandIcon,
+    BrandActiveIcon,
+    VoucherIcon,
+    VoucherActiveIcon,
 } from '~/components/Icons';
 
 const cx = classNames.bind(styles);
@@ -104,6 +110,24 @@ function Sidebar() {
                     to={config.routes.ADservicesDay}
                     icon={<PeriodicMaintenanceIcon />}
                     activeIcon={<PeriodicMaintenanceActiveIcon />}
+                />
+                <MenuItem
+                    title="Category"
+                    to={config.routes.ADcategory}
+                    icon={<CategoryIcon />}
+                    activeIcon={<CategoryActiveIcon />}
+                />
+                <MenuItem
+                    title="Brand"
+                    to={config.routes.ADbrand}
+                    icon={<BrandIcon />}
+                    activeIcon={<BrandActiveIcon />}
+                />
+                <MenuItem
+                    title="Voucher"
+                    to={config.routes.ADvoucher}
+                    icon={<VoucherIcon />}
+                    activeIcon={<VoucherActiveIcon />}
                 />
             </Menu>
         </aside>

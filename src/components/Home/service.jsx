@@ -38,7 +38,7 @@ function Service() {
                                 <ChatBubbleLeftEllipsisIcon className="size-8 text-black-500 mb-2" />
                                 <h3>Nhiệt tình</h3>
                             </a>
-                            <p>XỬ lý nhanh chóng</p>
+                            <p>Xử lý nhanh chóng</p>
                         </div>
                     </div>
                     <div className="col-lg-3 col-md-6">

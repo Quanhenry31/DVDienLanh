@@ -5,11 +5,10 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import Create from './Create';
 import UpdateProduct from './Edit';
-import SearchProduct from '../Search';
+import SearchProduct from './Search';
 import { useDebounce } from '~/hooks';
-import dayjs from 'dayjs';
 
-const Category = () => {
+const Voucher = () => {
     const [listOfPosts, setListOfPosts] = useState([]);
     const [create, setCreateBtn] = useState(false);
     const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
@@ -31,22 +30,39 @@ const Category = () => {
             key: 'id',
         },
         {
-            title: 'Tên gói',
+            title: 'Tên voucher',
             dataIndex: 'name',
             key: 'name',
             render: (text) => <a>{text}</a>,
         },
         {
-            title: 'Ngày tạo',
-            dataIndex: 'createdAt',
-            key: 'createdAt',
-            render: (text) => dayjs(text).format('DD/MM/YYYY HH:mm:ss'), // Format ngày
+            title: 'Ảnh',
+            dataIndex: 'image',
+            key: 'image',
+            render: (image) =>
+                image && image.length > 0 ? (
+                    <img src={image} alt="Voucher" style={{ width: '70px', height: '70px' }} />
+                ) : (
+                    'Không có ảnh'
+                ),
         },
         {
-            title: 'Ngày cập nhập mới nhất',
-            dataIndex: 'updatedAt',
-            key: 'updatedAt',
-            render: (text) => dayjs(text).format('DD/MM/YYYY HH:mm:ss'), // Format ngày
+            title: 'Giảm phần trăm',
+            dataIndex: 'value',
+            key: 'value',
+            render: (text) => <a>{text}</a>,
+        },
+        {
+            title: 'Đã dùng %',
+            dataIndex: 'valueMin',
+            key: 'valueMin',
+            render: (text) => <a>{text}</a>,
+        },
+        {
+            title: 'Giảm giá tối đa',
+            dataIndex: 'valueMax',
+            key: 'valueMax',
+            render: (text) => <a>{text}</a>,
         },
         {
             title: 'Hành động',
@@ -83,7 +99,7 @@ const Category = () => {
     const handleDeleteProduct = async (data) => {
         if (data.id) {
             try {
-                await axios.delete('http://localhost:9000/api/servicesTimeUsually/' + data.id);
+                await axios.delete('http://localhost:9000/api/vouchers/' + data.id);
                 setIsdelete(true);
             } catch (error) {
                 console.log(error);
@@ -116,7 +132,7 @@ const Category = () => {
     // }, [debounceValue]);
 
     useEffect(() => {
-        axios.get('http://localhost:9000/api/servicesTimeUsually').then((response) => {
+        axios.get('http://localhost:9000/api/vouchers').then((response) => {
             setListOfPosts(response.data.data);
             setIsdelete(false);
         });
@@ -136,4 +152,4 @@ const Category = () => {
     );
 };
 
-export default Category;
+export default Voucher;
